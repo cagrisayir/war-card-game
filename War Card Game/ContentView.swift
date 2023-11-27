@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    var playerCard = "card7"
-    var cpuCard = "card13"
     
-    var playerScore = 1
-    var cpuScore = 1
+    @State var playerCard: String = "card7"
+    @State var cpuCard: String = "card13"
+    
+    @State var playerScore: Int = 0
+    @State var cpuScore: Int = 0
     
     var body: some View {
         
@@ -22,7 +23,11 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 
-                Image("logo")
+                Button(action: {
+                    reset()
+                }, label: {
+                    Image("logo")
+                })
                 
                 Spacer()
                 
@@ -75,7 +80,20 @@ struct ContentView: View {
     }
     
     func deal() -> Void {
-        print("Deal cards")
+        // Randomize the players card
+        let playerCardNumber = Int.random(in: 2...14)
+        playerCard = "card" + String(playerCardNumber)
+        // Randomize cpus card
+        let cpuCardNumber = Int.random(in: 2...14)
+        cpuCard = "card" + String(cpuCardNumber)
+        // update the score
+        if playerCardNumber > cpuCardNumber { playerScore+=1 }
+        else if cpuCardNumber > playerCardNumber { cpuScore+=1 }
+    }
+    
+    func reset() -> Void {
+        playerScore = 0
+        cpuScore = 0
     }
 }
 
